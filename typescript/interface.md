@@ -14,22 +14,21 @@ myArray = ["Bob", "Fred"];
 ```
 interface Something {   
     [index: string]: number;
-    [index: number]: number;  //数字索引的返回值类型是number,它是字符串索引的返回值类型的子类型；若[index: string]:string,则数字索引的返回值类型也必须是string
+    [index: number]: number;  //数字索引的返回值类型是number,它是字符串索引的返回值类型的子类型；
+    若[index: string]:string,则数字索引的返回值类型也必须是string
 }
 ```
 举例如下：
 
 ```
-interface StringArr {
-    [index: string]: string;
-}
 var myArray_1: StringArr;
 myArray_1 = {
     '111': 'dsd',
-    'rewrw': 'lw'
+    'rewrw': 'lw',
+    32131: 'fdsfsf'
 };
 
-console.log('data: ', myArray_1["111"])
+console.log('data: ', myArray_1["32131"])
 ```
 虽然索引标识是个用来描述数组及"dictionary"模式的很好的方式，同时也迫使所有属性需要匹配他们的返回类型。在这个例子中，属性类型与索引类型不匹配，类型检查程序给出错误：
 
