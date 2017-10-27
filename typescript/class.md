@@ -65,7 +65,7 @@ tom.move(34);
 例子也体现了在子类中可以重写基类中的方法以达到重写后的方法是在这个子类中专用。这里的"Horse"和"Snake"都创建了"move"这个方法，这样就重写了从基类继承过来的move方法，并且在不同类中给"move"不同的方法。
 
 ## 公有和私有的修饰符
-> 默认是public(公有)
+### 默认是public(公有)
 你可能已经注意到了，在上面的例子中，我们并未对类的任何可见成员使用"public"关键字进行修饰。类似C#语言，需要给成员使用"public"修饰符用来明确它是可见。在TypeScript中，每个成员默认是"public"的。
 
 你还可以给成员标记上"private"，这样你就可以控制在你的类之外哪些成员是可见。我们可以像这样重写上一节的"Animal"类：
@@ -78,7 +78,7 @@ class Animal {
     }
 }
 ```
-> 理解Private(私有)
+### 理解Private(私有)
 
 TypeScript是个构造类型的系统。当我们对两个类型进行比较的时候，无论它们是从哪里来，如果所有成员的类型都是兼容的，那么我们可以认为他们的类型也是兼容的。
 
@@ -106,4 +106,128 @@ animal = employee; // 错误: Animal 和 Employee 不兼容
 > 这个问题应该是其他变成语言中多态的概念，也就是类型兼容性的问题，可以单独分章节拿出来分析的
 
 在这个例子中，我们有一个"Animal"和一个"Rhino"，"Rhino"是"Animal"的一个子类。我们还有一个新的类"Employee"，它看上去跟"Animal"类是完全相同的。我们给这些类分别创建实例，并且对他们进行相互赋值，看下将会发生什么。因为"animal"和"rhino"的私有成员都是从"Animal"类定义的"private name: string"共享而来的，所以他们是兼容的。然而，"employee"的情况却不是这样的。当我们试图将"employee"赋值给"animal"，我们得到了一个错误，他们的类型是不兼容的。尽管"Employee"也有一个名称是"name"的私有成员，但它和在"Animal"中的私有成员"name"还是不相同的。
+
+### 理解protected(保护)  后续补充
+这个需要后续补充
+
+### 参数属性
+关键字"public"和"private"通过创建参数属性的方式给我们提供了创建和初始化类的成员的便捷方式。这个特性让你可以一个步骤就创建和初始化成员。这里有一个之前例子的进一步修改。注意我们是如何在constructor中将"name"使用"private name: string"的便捷方式完整的创建并初始化成这个类的私有成员"name"的。
+
+```
+class Animal {
+    constructor(private name: string) { }
+    move(meters: number) {
+        alert(this.name + " moved " + meters + "m.");
+    }
+}
+var goat = new Animal("Goat");
+goat.move(25); // Goat moved 25 m.
+```
+通过这种方式使用"private"来创建和初始化私有成员，"public"也一样。
+> 参数属性这种方式，是不是使得相关成员属性定义不明确，描述不清晰，应该分开单独写
+
+### 访问器
+
+TypeScript提供 getters/setters 的方式来拦截对于类成员对象成员的访问。它让我们可以更精确的控制如何对对象成员的进行访问。
+
+让我们来将一个类的属性的某些写法改写成用"get"和"set"。首先，我们从一个没有"get"和"set"的例子开始：
+```
+class Employee {
+    fullName: string;
+}
+var employee = new Employee();
+employee.fullName = "Bob Smith";
+if (employee.fullName) {
+    alert(employee.fullName);
+}
+```
+以上代码允许我们随意设置fullName，可能我们会觉得这样比较直接和方便，但这么随心所欲的改变名字也可能会导致问题。
+
+在这个版本中，我们将给被允许修改员工信息的用户一个可用的密码。在对fullName进行"set"访问的之前，我们会以检查密码来代替允许直接修改。我们添加一个相应的"get"让之前的例子依然能实现。
+
+```
+var passcode = "secret passcode";
+class Employee {
+    private _fullName: string;
+    get fullName(): string {
+        return this._fullName;
+    }
+    set fullName(newName: string) {
+        if (passcode && passcode == "secret passcode") {
+            this._fullName = newName;
+        }
+        else {
+            alert("Error: Unauthorized update of employee!");
+        }
+    }
+}
+var employee = new Employee();
+employee.fullName = "Bob Smith";
+if (employee.fullName) {
+    alert(employee.fullName);
+}
+```
+为了证明现在访问需要密码，我们可以修改密码，然后我们会发现，当密码不符合的时候会弹出提示"Error: Unauthorized update of employee!"(错误：没有修改employee的权限)。
+
+> 注意：访问器需要我们将文件以ECMAScript5编程输出。
+```
+tsc --target ES5 your.ts
+```
+## 静态成员与实例成员
+到此为止，我们只谈到类的实例成员，那些只有实例化后才初始化并且显示的成员。我们还可以为类创建类的静态成员，静态成员在类本身上可见而非在实例上可见。在这个例子中，我们使用"static"来修饰"origin",因为他是所有Grid类都会用到的东西。任何地方需要使用它，都需要在前面加上类名。这就像要在实例对象方法中需要在成员属性前加上"this"来访问这个实例的成员属性。在这里我们将使用"Grid."来访问静态成员。
+
+```
+class Grid {
+    static origin = {x: 0, y: 0};
+    calculateDistanceFromOrigin(point: {x: number; y: number;}) {
+        var xDist = (point.x - Grid.origin.x);
+        var yDist = (point.y - Grid.origin.y);
+        return Math.sqrt(xDist * xDist + yDist * yDist) / this.scale;
+    }
+    constructor (public scale: number) { }
+}
+var grid1 = new Grid(1.0);  // 1x 规模
+var grid2 = new Grid(5.0);  // 5x 规模
+alert(grid1.calculateDistanceFromOrigin({x: 10, y: 10}));
+alert(grid2.calculateDistanceFromOrigin({x: 10, y: 10}));
+```
+
+## 高级技巧
+### 构造函数
+当你在TypeScript中声明一个类的同时，你也定义了很多东西。首先就是这个类的实例类型。
+
+```
+class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+var greeter: Greeter;
+greeter = new Greeter("world");
+alert(greeter.greet());
+```
+这里，当我们写"var greeter: Greeter"，我们就已经将"Greeter"类的实例类型定义为"Greeter"了。这对于用过其它面向对象语言的程序员而言已经习以为常了。
+
+我们也同时的创建了一个类的构造函数，当我们使用"new"来为类创建实例的时候，我们将会调用这个函数。让我们结合实践，在编译后的JavaScript中看看上面的这个例子吧：
+
+```
+var Greeter = (function () {
+    function Greeter(message) {
+        this.greeting = message;
+    }
+    Greeter.prototype.greet = function () {
+        return "Hello, " + this.greeting;
+    };
+    return Greeter;
+})();
+var greeter;
+greeter = new Greeter("world");
+alert(greeter.greet());
+```
+> 在创建完类之后，类的静态成员就存在了，类的实例成员需要等到实例构建之后才存在（???）
+
 
