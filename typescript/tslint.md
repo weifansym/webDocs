@@ -140,7 +140,8 @@ tslint --init
 }
 
 ```
-
+### 使用
+在webstrom中只需要配置tslint使用的包就好了，其实就是前面我们安装tslint的包。
 
 
 
