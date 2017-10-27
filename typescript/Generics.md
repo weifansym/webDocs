@@ -41,6 +41,7 @@ obj.zeroValue = duHuo;    //  异常： Type 'Duhuo' is not assignable to type '
  ```
  
  在泛型中使用类类型
+ 
 当在TypeScript中使用泛型创建工厂函数的时候，需要引用其构造函数的类类型。
 
 ```
