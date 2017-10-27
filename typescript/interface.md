@@ -38,3 +38,5 @@ interface Dictionary {
   length: number;    // 错误, 'length'的类型不是索引类型的子类型
 } 
 ```
+> 这里有点绕，需要多多理解
+
