@@ -39,3 +39,26 @@ duHuo.name = '多态';
 obj.zeroValue = duHuo;    //  异常： Type 'Duhuo' is not assignable to type 'Huo'*/
 
  ```
+ 
+ 在泛型中使用类类型
+当在TypeScript中使用泛型创建工厂函数的时候，需要引用其构造函数的类类型。
+
+```
+class Greeter_1{
+    greeter:string = "Hello World";
+}
+//  泛型方法
+function create_1<T>(c: T): T {
+    return c
+}
+
+//  泛型工厂函数
+//  当在TypeScript中使用泛型创建工厂函数的时候，需要引用其构造函数的类类型。
+//  参数c是一个对象参数，其中new ()相当于构造函数，T就是构造函数的所属的类的类型变量
+function create<T> (c: {new () : T} ): T {
+    return new c();
+}
+
+var newGreeter = create<Greeter_1>(Greeter_1);
+
+```
