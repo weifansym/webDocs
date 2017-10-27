@@ -273,3 +273,5 @@ interface Point3d extends Point {
 var point3d: Point3d = {x: 1, y: 2, z: 3};
 ```
 
+## 更多关于class的内容将来更新
+抽象类，只读属性等
