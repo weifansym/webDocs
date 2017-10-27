@@ -229,5 +229,47 @@ greeter = new Greeter("world");
 alert(greeter.greet());
 ```
 > 在创建完类之后，类的静态成员就存在了，类的实例成员需要等到实例构建之后才存在（???）
+在这里，"var Greeter"是指定构造函数。当我们使用"new"并且执行这个函数之后，便会得到一个类的实例。这个构造函数包含了类的所有的静态成员。换种说法，即类有静态部分和实例部分。
+让我们稍微修改下例子看看它们的不同之处：
 
+```
+class Greeter {
+    static standardGreeting = "Hello, there";
+    greeting: string;
+    greet() {
+        if (this.greeting) {
+            return "Hello, " + this.greeting;
+        }
+        else {
+            return Greeter.standardGreeting;
+        }
+    }
+}
+var greeter1: Greeter;
+greeter1 = new Greeter();
+alert(greeter1.greet());
+// 上下代码效果做对比
+var greeterMaker: typeof Greeter = Greeter;
+greeterMaker.standardGreeting = "Hey there!";
+var greeter2:Greeter = new greeterMaker();
+alert(greeter2.greet());
+```
+在这个例子中，"greeter1"和之前例子是一样的。我们实例化了"Greeter"类，并且使用这个对象。结果也和之前的例子一样。
+
+接下来，我们直接使用这个类，我们创建了一个名为"greeterMaker"的新变量。这个变量保存了这个类，换种说法即保存了这个类的构造函数。这里我们使用"typeof Greeter",来获取"Greeter"类的类型，这么声明"greeterMaker"的类型就成了"Greeter"类的类型，而非"Greeter"的实例的类型("Greeter"类的实例类型为"Greeter")。
+更准确的说，greeterMaker的类型就是Greeter类的类型，也就是构造函数的类型。这个类包含"Greeter"类的所有静态成员和创建"Greeter"类的实例的构造函数。同之前的例子一样，我们对"greeterMaker"使用"new"，来创建Greeter类的实例。
+
+### 将类当作接口一样使用
+正如我们在上一节所说的，声明一个类的同时会创建其他两个东西：这个类的实例类型和一个构造函数。因为类能够创建类型，所以在使用interface(接口)的地方都可以使用class(类)。
+
+```
+class Point {
+    x: number;
+    y: number;
+}
+interface Point3d extends Point {
+    z: number;
+}
+var point3d: Point3d = {x: 1, y: 2, z: 3};
+```
 
