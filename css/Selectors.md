@@ -27,3 +27,4 @@ color: blue;
 </style>
 ```
 
+参考：https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_Started/Selectors
