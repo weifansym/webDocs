@@ -1,4 +1,7 @@
 ## CSS基础
+### CSS基础教程
+中文版：https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started
+
 ### @规则
 一个 at-rule 是一个CSS 语句，以at符号开头, '@' (U+0040 COMMERCIAL AT), 后跟一个标识符，并包括直到下一个分号的所有内容, ';' (U+003B SEMICOLON), 或下一个CSS块，以先到者为准。
 
