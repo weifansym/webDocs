@@ -17,3 +17,7 @@ https://www.renfei.org/blog/http-caching.html
 https://excaliburhan.com/post/things-you-should-know-about-browser-cache.html
 
 https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn
+
+## chrome开发者工具
+
+http://www.css88.com/doc/chrome-devtools/
