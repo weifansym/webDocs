@@ -23,3 +23,17 @@ https://developers.google.cn/web/fundamentals/performance/optimizing-content-eff
 http://www.css88.com/doc/chrome-devtools/
 
 https://developers.google.com/web/tools/chrome-devtools/
+
+## Storage
+https://juejin.im/entry/594a663e128fe1006a687528
+
+https://github.com/dwqs/blog/issues/42
+
+http://jerryzou.com/posts/cookie-and-web-storage/
+
+http://caibaojian.com/web-storage.html
+
+https://www.awaimai.com/200.html
+
+http://javascript.ruanyifeng.com/bom/webstorage.html
+
