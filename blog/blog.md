@@ -21,3 +21,5 @@ https://developers.google.cn/web/fundamentals/performance/optimizing-content-eff
 ## chrome开发者工具
 
 http://www.css88.com/doc/chrome-devtools/
+
+https://developers.google.com/web/tools/chrome-devtools/
